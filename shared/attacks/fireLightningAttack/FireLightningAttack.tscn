@@ -1,0 +1,79 @@
+[gd_scene load_steps=4 format=2]
+
+[ext_resource path="res://FireLightningAttack.gd" type="Script" id=1]
+[ext_resource path="res://shared/attacks/fireLightningAttack/fireBall/FireBall.tscn" type="PackedScene" id=2]
+
+[sub_resource type="RectangleShape2D" id=1]
+
+custom_solver_bias = 0.0
+extents = Vector2( 404, 235 )
+
+[node name="FireLightningAttack" type="Area2D"]
+
+input_pickable = true
+gravity_vec = Vector2( 0, 1 )
+gravity = 98.0
+linear_damp = 0.1
+angular_damp = 1.0
+collision_layer = 0
+collision_mask = 8
+audio_bus_override = false
+audio_bus_name = "Master"
+script = ExtResource( 1 )
+_sections_unfolded = [ "Collision" ]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." index="0"]
+
+shape = SubResource( 1 )
+_sections_unfolded = [ "Transform" ]
+
+[node name="FireBall1" parent="." index="1" instance=ExtResource( 2 )]
+
+position = Vector2( -190, 10 )
+scale = Vector2( 1e-005, 1e-005 )
+
+[node name="FireBall2" parent="." index="2" instance=ExtResource( 2 )]
+
+position = Vector2( 140, 130 )
+scale = Vector2( 1e-005, 1e-005 )
+
+[node name="FireBall3" parent="." index="3" instance=ExtResource( 2 )]
+
+position = Vector2( 250, -80 )
+scale = Vector2( 1e-005, 1e-005 )
+
+[node name="FireBall4" parent="." index="4" instance=ExtResource( 2 )]
+
+position = Vector2( -40, -120 )
+scale = Vector2( 1e-005, 1e-005 )
+
+[node name="Tween" type="Tween" parent="." index="5"]
+
+repeat = false
+playback_process_mode = 1
+playback_speed = 1.0
+playback/active = false
+playback/repeat = false
+playback/speed = 1.0
+
+[node name="SetMineTimer" type="Timer" parent="." index="6"]
+
+process_mode = 1
+wait_time = 0.2
+one_shot = true
+autostart = false
+
+[node name="Timer" type="Timer" parent="." index="7"]
+
+process_mode = 1
+wait_time = 8.0
+one_shot = true
+autostart = false
+
+[connection signal="body_entered" from="." to="." method="_on_FireLightningAttack_body_entered"]
+
+[connection signal="timeout" from="SetMineTimer" to="." method="_on_SetMineTimer_timeout"]
+
+[connection signal="timeout" from="Timer" to="." method="_on_Timer_timeout"]
+
+

@@ -1,0 +1,164 @@
+[gd_scene load_steps=17 format=2]
+
+[ext_resource path="res://shared/player/Player.tscn" type="PackedScene" id=1]
+[ext_resource path="res://shared/collectableScanner/CollectableScanner.tscn" type="PackedScene" id=2]
+[ext_resource path="res://scenes/ProjectileScanner.gd" type="Script" id=3]
+[ext_resource path="res://environment/tiles/concrete1_tileset.tres" type="TileSet" id=4]
+[ext_resource path="res://environment/windows/broken-window1.png" type="Texture" id=5]
+[ext_resource path="res://environment/windows/broken-window-tentacle2.png" type="Texture" id=6]
+[ext_resource path="res://environment/dayNightBackground/DayNightBackground.tscn" type="PackedScene" id=7]
+[ext_resource path="res://shared/levelManager/LevelManager.tscn" type="PackedScene" id=8]
+[ext_resource path="res://shared/soul/Soul.tscn" type="PackedScene" id=9]
+[ext_resource path="res://shared/enemies/ratSpider/RatSpider.tscn" type="PackedScene" id=10]
+[ext_resource path="res://environment/windows/full-window.png" type="Texture" id=11]
+[ext_resource path="res://environment/windows/brokenWindowTentacle.png" type="Texture" id=12]
+[ext_resource path="res://shared/enemies/tentacle/tentacleMonster.tscn" type="PackedScene" id=13]
+[ext_resource path="res://shared/attacks/balls/iceBall/IceBall.tscn" type="PackedScene" id=14]
+
+[sub_resource type="RectangleShape2D" id=1]
+
+custom_solver_bias = 0.0
+extents = Vector2( 399.842, 236.96 )
+
+[sub_resource type="StreamTexture" id=2]
+
+flags = 4
+load_path = ""
+
+[node name="Node" type="Node"]
+
+[node name="Player" parent="." index="0" instance=ExtResource( 1 )]
+
+position = Vector2( -600, -229 )
+
+[node name="Camera2D" type="Camera2D" parent="Player" index="5"]
+
+position = Vector2( 0, 50 )
+anchor_mode = 1
+rotating = false
+current = true
+zoom = Vector2( 1, 1 )
+limit_left = -10000000
+limit_top = -10000000
+limit_right = 10000000
+limit_bottom = 10000000
+limit_smoothed = false
+drag_margin_h_enabled = false
+drag_margin_v_enabled = false
+smoothing_enabled = false
+smoothing_speed = 5.0
+offset_v = 0.0
+offset_h = 0.0
+drag_margin_left = 0.2
+drag_margin_top = 0.2
+drag_margin_right = 0.2
+drag_margin_bottom = 0.2
+editor_draw_screen = true
+editor_draw_limits = false
+editor_draw_drag_margin = false
+_sections_unfolded = [ "Drag Margin", "Limit", "Material", "Offset", "Smoothing", "Transform", "Visibility" ]
+
+[node name="CollectableScanner" parent="Player/Camera2D" index="0" instance=ExtResource( 2 )]
+
+_sections_unfolded = [ "Collision", "Transform", "Visibility" ]
+
+[node name="ProjectileScanner" type="Area2D" parent="Player/Camera2D" index="1"]
+
+input_pickable = true
+gravity_vec = Vector2( 0, 1 )
+gravity = 98.0
+linear_damp = 0.1
+angular_damp = 1.0
+collision_layer = 0
+collision_mask = 12
+audio_bus_override = false
+audio_bus_name = "Master"
+script = ExtResource( 3 )
+_sections_unfolded = [ "Collision" ]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Player/Camera2D/ProjectileScanner" index="0"]
+
+shape = SubResource( 1 )
+
+[node name="TileMap" type="TileMap" parent="." index="1"]
+
+editor/display_folded = true
+position = Vector2( -939.286, -5.51245 )
+mode = 0
+tile_set = ExtResource( 4 )
+cell_size = Vector2( 64, 64 )
+cell_quadrant_size = 16
+cell_custom_transform = Transform2D( 1, 0, 0, 1, 0, 0 )
+cell_half_offset = 2
+cell_tile_origin = 0
+cell_y_sort = false
+cell_clip_uv = false
+collision_use_kinematic = false
+collision_friction = 1.0
+collision_bounce = 0.0
+collision_layer = 2
+collision_mask = 5
+occluder_light_mask = 1
+format = 1
+tile_data = PoolIntArray( -1114086, 0, 6, -1114085, 0, 196610, -1048551, 0, 196608, -1048550, 0, 65543, -983016, 0, 196613, -917481, 0, 196613, -851946, 0, 196613, -786411, 0, 196613, -720876, 0, 196613, -655341, 0, 5, -589806, 0, 6, -589805, 0, 65543, -524273, 0, 1, -524272, 0, 65536, -524271, 0, 9, -524270, 0, 65543, -458747, 0, 1, -458746, 0, 65536, -458745, 0, 2, -458742, 0, 5, -458738, 0, 1, -458737, 0, 65540, -458736, 0, 196619, -458735, 0, 131074, -393213, 0, 196608, -393212, 0, 196609, -393211, 0, 65544, -393210, 0, 131072, -393209, 0, 65547, -393208, 0, 196609, -393207, 0, 196609, -393206, 0, 196611, -393205, 0, 10, -393204, 0, 65536, -393203, 0, 65536, -393202, 0, 65540, -393201, 0, 196619, -393200, 0, 196619, -393199, 0, 65539, -393198, 0, 65536, -393197, 0, 65536, -393196, 0, 65536, -393195, 0, 9, -393194, 0, 196610, -327669, 0, 131073, -327668, 0, 0, -327667, 0, 196619, -327666, 0, 0, -327665, 0, 0, -327664, 0, 0, -327663, 0, 3, -327662, 0, 131072, -327661, 0, 131072, -327660, 0, 4, -327659, 0, 131074, -262133, 0, 131073, -262132, 0, 0, -262131, 0, 196619, -262130, 0, 196619, -262129, 0, 196619, -262128, 0, 196619, -262127, 0, 131074, -262124, 0, 65546, -262123, 0, 65547, -262122, 0, 196610, -196597, 0, 131073, -196596, 0, 3, -196595, 0, 131072, -196594, 0, 131072, -196593, 0, 131072, -196592, 0, 131072, -196591, 0, 65547, -196590, 0, 196609, -196589, 0, 196609, -196588, 0, 65543, -65542, 0, 1, -65541, 0, 65536, -65540, 0, 65536, -65539, 0, 65536, -65538, 0, 65536, -65537, 0, 65536, -131072, 0, 65536, -131071, 0, 65536, -131070, 0, 2, -131068, 0, 1, -131067, 0, 65536, -131066, 0, 65536, -131065, 0, 9, -131064, 0, 196609, -131063, 0, 196610, -131061, 0, 65537, -131060, 0, 65538, -6, 0, 131073, -5, 0, 196619, -4, 0, 3, -3, 0, 131072, -2, 0, 131072, -1, 0, 196618, -65536, 0, 131072, -65535, 0, 4, -65534, 0, 65539, -65533, 0, 65536, -65532, 0, 65540, -65531, 0, 3, -65530, 0, 131072, -65529, 0, 65545, 65530, 0, 65537, 65531, 0, 131072, 65532, 0, 65538, 65535, 0, 65541, 1, 0, 131073, 2, 0, 196619, 3, 0, 0, 4, 0, 196619, 5, 0, 131074, 7, 0, 8, 8, 0, 65536, 9, 0, 2, 131069, 0, 196608, 131070, 0, 196609, 131071, 0, 196611, 65536, 0, 196609, 65537, 0, 65544, 65538, 0, 131072, 65539, 0, 131072, 65540, 0, 131072, 65541, 0, 65547, 65542, 0, 196609, 65543, 0, 65544, 65544, 0, 4, 65545, 0, 65539, 65546, 0, 2, 65587, 0, 196608, 65588, 0, 196610, 131080, 0, 65537, 131081, 0, 4, 131082, 0, 65539, 131083, 0, 65536, 131084, 0, 9, 131085, 0, 196609, 131086, 0, 196609, 131087, 0, 196609, 131088, 0, 196609, 131089, 0, 196609, 131090, 0, 196609, 131091, 0, 196609, 131092, 0, 196609, 131093, 0, 196609, 131094, 0, 196609, 131095, 0, 196609, 131096, 0, 196609, 131097, 0, 196609, 131098, 0, 196609, 131099, 0, 196609, 131100, 0, 196609, 131101, 0, 196609, 131102, 0, 196609, 131103, 0, 196609, 131104, 0, 196609, 131105, 0, 196609, 131106, 0, 196609, 131107, 0, 196609, 131108, 0, 196609, 131109, 0, 196609, 131110, 0, 196609, 131111, 0, 196609, 131112, 0, 196609, 131113, 0, 196609, 131114, 0, 196609, 131115, 0, 196609, 131116, 0, 196609, 131117, 0, 196609, 131118, 0, 196609, 131119, 0, 196609, 131120, 0, 196609, 131121, 0, 196609, 131122, 0, 196610, 196617, 0, 65537, 196618, 0, 4, 196619, 0, 196619, 196620, 0, 131074, 262152, 0, 5, 262154, 0, 131073, 262155, 0, 3, 262156, 0, 65538, 327688, 0, 65542, 327689, 0, 196609, 327690, 0, 65544, 327691, 0, 65538, 720904, 0, 196613 )
+_sections_unfolded = [ "Collision", "Transform" ]
+
+[node name="broken-window1" type="Sprite" parent="TileMap" index="0"]
+
+position = Vector2( -0.259155, -48.4718 )
+texture = ExtResource( 5 )
+
+[node name="broken-window2" type="Sprite" parent="TileMap" index="1"]
+
+position = Vector2( 129.108, -79.6525 )
+texture = SubResource( 2 )
+
+[node name="broken-window-tentacle2" type="Sprite" parent="TileMap" index="2"]
+
+position = Vector2( -211.227, -96.238 )
+texture = ExtResource( 6 )
+
+[node name="ParallaxBackground" parent="." index="2" instance=ExtResource( 7 )]
+
+[node name="LevelManager" parent="." index="3" instance=ExtResource( 8 )]
+
+_sections_unfolded = [ "Material", "Transform", "Visibility" ]
+
+[node name="Soul" parent="." index="4" instance=ExtResource( 9 )]
+
+position = Vector2( -320, 40 )
+
+[node name="RatSpider" parent="." index="5" instance=ExtResource( 10 )]
+
+position = Vector2( 574.256, -219.479 )
+
+[node name="full-window" type="Sprite" parent="." index="6"]
+
+position = Vector2( -828.143, -142.345 )
+texture = ExtResource( 11 )
+
+[node name="full-window2" type="Sprite" parent="." index="7"]
+
+position = Vector2( -924.364, -143.178 )
+texture = ExtResource( 11 )
+
+[node name="brokenWindowTentacle" type="Sprite" parent="." index="8"]
+
+position = Vector2( -928.445, -26.1857 )
+texture = ExtResource( 12 )
+
+[node name="tentacleMonster" parent="." index="9" instance=ExtResource( 13 )]
+
+position = Vector2( -306.607, -162.865 )
+
+[node name="IceBall" parent="." index="10" instance=ExtResource( 14 )]
+
+position = Vector2( -714.781, -93.8601 )
+
+[node name="IceBall2" parent="." index="11" instance=ExtResource( 14 )]
+
+position = Vector2( -710.268, -146.205 )
+
+[connection signal="body_exited" from="Player/Camera2D/ProjectileScanner" to="Player/Camera2D/ProjectileScanner" method="_on_ProjectileScanner_body_exited"]
+
+

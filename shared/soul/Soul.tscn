@@ -1,0 +1,79 @@
+[gd_scene load_steps=5 format=2]
+
+[ext_resource path="res://shared/soul/Soul.gd" type="Script" id=1]
+[ext_resource path="res://shared/soul/soul.png" type="Texture" id=2]
+[ext_resource path="res://shared/soul/SoulParticles/SoulParticles.tscn" type="PackedScene" id=3]
+
+[sub_resource type="RectangleShape2D" id=1]
+
+custom_solver_bias = 0.0
+extents = Vector2( 6.85989, 25.2303 )
+
+[node name="Soul" type="Area2D"]
+
+input_pickable = true
+gravity_vec = Vector2( 0, 1 )
+gravity = 98.0
+linear_damp = 0.1
+angular_damp = 1.0
+collision_layer = 0
+audio_bus_override = false
+audio_bus_name = "Master"
+script = ExtResource( 1 )
+_sections_unfolded = [ "Audio Bus", "Collision", "Material", "Pickable", "Transform", "Visibility", "Z Index" ]
+
+[node name="Sprite" type="Sprite" parent="." index="0"]
+
+scale = Vector2( 0.5, 0.5 )
+texture = ExtResource( 2 )
+_sections_unfolded = [ "Material", "Visibility" ]
+
+[node name="SoulParticles" parent="." index="1" instance=ExtResource( 3 )]
+
+position = Vector2( -17, -7 )
+rotation = -2.35619
+
+[node name="SoulParticles4" parent="." index="2" instance=ExtResource( 3 )]
+
+position = Vector2( -17, 0 )
+rotation = -2.35619
+
+[node name="SoulParticles2" parent="." index="3" instance=ExtResource( 3 )]
+
+position = Vector2( 17, -7 )
+rotation = -0.785398
+scale = Vector2( 1, -1 )
+
+[node name="SoulParticles3" parent="." index="4" instance=ExtResource( 3 )]
+
+position = Vector2( 17, 0 )
+rotation = -0.785398
+scale = Vector2( 1, -1 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." index="5"]
+
+shape = SubResource( 1 )
+_sections_unfolded = [ "Transform", "Z Index" ]
+
+[node name="Tween" type="Tween" parent="." index="6"]
+
+repeat = true
+playback_process_mode = 1
+playback_speed = 1.0
+playback/active = false
+playback/repeat = true
+playback/speed = 1.0
+_sections_unfolded = [ "playback" ]
+
+[node name="Timer" type="Timer" parent="." index="7"]
+
+process_mode = 1
+wait_time = 6.0
+one_shot = true
+autostart = false
+
+[connection signal="body_entered" from="." to="." method="_on_Soul_body_entered"]
+
+[connection signal="timeout" from="Timer" to="." method="_on_Timer_timeout"]
+
+

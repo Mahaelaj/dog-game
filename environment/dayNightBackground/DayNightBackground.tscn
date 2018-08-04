@@ -1,0 +1,97 @@
+[gd_scene load_steps=8 format=2]
+
+[ext_resource path="res://shared/player/ParallaxBackground.gd" type="Script" id=1]
+[ext_resource path="res://shared/sky/Sky.png" type="Texture" id=2]
+[ext_resource path="res://shared/sky/stars1.png" type="Texture" id=3]
+[ext_resource path="res://shared/sky/stars2.png" type="Texture" id=4]
+[ext_resource path="res://shared/sky/stars3.png" type="Texture" id=5]
+
+[sub_resource type="Gradient" id=1]
+
+offsets = PoolRealArray( 0 )
+colors = PoolColorArray( 0.32549, 0.321569, 0.352941, 1 )
+
+[sub_resource type="GradientTexture" id=2]
+
+flags = 4
+gradient = SubResource( 1 )
+width = 2048
+
+[node name="ParallaxBackground" type="ParallaxBackground"]
+
+editor/display_folded = true
+layer = -1
+offset = Vector2( 0, 0 )
+rotation = 0.0
+scale = Vector2( 1, 1 )
+transform = Transform2D( 1, 0, 0, 1, 0, 0 )
+scroll_offset = Vector2( 0, 0 )
+scroll_base_offset = Vector2( 0, 0 )
+scroll_base_scale = Vector2( 1, 1 )
+scroll_limit_begin = Vector2( 0, 0 )
+scroll_limit_end = Vector2( 0, 0 )
+scroll_ignore_camera_zoom = false
+script = ExtResource( 1 )
+
+[node name="SkyLayer" type="ParallaxLayer" parent="." index="0"]
+
+motion_scale = Vector2( 0, 0 )
+motion_offset = Vector2( 0, 0 )
+motion_mirroring = Vector2( 0, 0 )
+_sections_unfolded = [ "Motion", "Transform", "Z Index" ]
+
+[node name="Sky" type="Sprite" parent="SkyLayer" index="0"]
+
+position = Vector2( 401.908, -3867.74 )
+rotation = 1.5708
+scale = Vector2( 3.66934, 803.298 )
+texture = SubResource( 2 )
+centered = false
+_sections_unfolded = [ "Offset", "Transform" ]
+__meta__ = {
+"_edit_group_": true
+}
+
+[node name="CloudsLayer" type="ParallaxLayer" parent="." index="1"]
+
+motion_scale = Vector2( 0.1, 0.1 )
+motion_offset = Vector2( 0, 0 )
+motion_mirroring = Vector2( 640, 640 )
+_sections_unfolded = [ "Material", "Motion", "Transform", "Visibility", "Z Index" ]
+
+[node name="Clouds" type="Sprite" parent="CloudsLayer" index="0"]
+
+scale = Vector2( 0.276058, 0.37599 )
+texture = ExtResource( 2 )
+centered = false
+_sections_unfolded = [ "Offset", "Transform" ]
+
+[node name="StarsLayer" type="ParallaxLayer" parent="." index="2"]
+
+motion_scale = Vector2( 0.1, 0.1 )
+motion_offset = Vector2( 0, 0 )
+motion_mirroring = Vector2( 640, 640 )
+_sections_unfolded = [ "Motion" ]
+
+[node name="Stars1" type="Sprite" parent="StarsLayer" index="0"]
+
+scale = Vector2( 1.5, 1.5 )
+texture = ExtResource( 3 )
+centered = false
+_sections_unfolded = [ "Offset", "Transform" ]
+
+[node name="Stars2" type="Sprite" parent="StarsLayer" index="1"]
+
+scale = Vector2( 1.5, 1.5 )
+texture = ExtResource( 4 )
+centered = false
+_sections_unfolded = [ "Offset", "Transform" ]
+
+[node name="Stars3" type="Sprite" parent="StarsLayer" index="2"]
+
+scale = Vector2( 1.5, 1.5 )
+texture = ExtResource( 5 )
+centered = false
+_sections_unfolded = [ "Offset", "Transform" ]
+
+

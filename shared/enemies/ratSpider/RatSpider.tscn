@@ -1,0 +1,125 @@
+[gd_scene load_steps=13 format=2]
+
+[ext_resource path="res://shared/enemies/ratSpider/RatSpider.gd" type="Script" id=1]
+[ext_resource path="res://shared/enemies/ratSpider/ratSpider1.png" type="Texture" id=2]
+[ext_resource path="res://shared/enemies/ratSpider/ratSpider2.png" type="Texture" id=3]
+[ext_resource path="res://shared/enemies/ratSpider/ratSpider3.png" type="Texture" id=4]
+[ext_resource path="res://shared/attacks/burningParticleEffect/BurningParticleEffects.tscn" type="PackedScene" id=5]
+[ext_resource path="res://shared/enemies/ratSpider/ratLightning1.png" type="Texture" id=6]
+[ext_resource path="res://shared/enemies/ratSpider/ratLightning2.png" type="Texture" id=7]
+[ext_resource path="res://shared/enemies/ratSpider/ratLightning3.png" type="Texture" id=8]
+[ext_resource path="res://shared/enemies/ratSpider/ratLightning4.png" type="Texture" id=9]
+[ext_resource path="res://shared/enemies/ratSpider/ratLightning5.png" type="Texture" id=10]
+
+[sub_resource type="SpriteFrames" id=1]
+
+animations = [ {
+"frames": [ ExtResource( 2 ), ExtResource( 3 ), ExtResource( 4 ) ],
+"loop": true,
+"name": "default",
+"speed": 5.0
+} ]
+_sections_unfolded = [ "Resource" ]
+
+[sub_resource type="SpriteFrames" id=2]
+
+animations = [ {
+"frames": [ ExtResource( 6 ), ExtResource( 7 ), ExtResource( 8 ), ExtResource( 9 ), ExtResource( 10 ) ],
+"loop": true,
+"name": "default",
+"speed": 5.0
+} ]
+
+[node name="RatSpider" type="KinematicBody2D"]
+
+input_pickable = false
+collision_layer = 8
+collision_mask = 2
+collision/safe_margin = 0.08
+script = ExtResource( 1 )
+_sections_unfolded = [ "Collision", "Pickable", "Transform", "Z Index", "collision" ]
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="." index="0"]
+
+build_mode = 0
+polygon = PoolVector2Array( -23.7769, 2.84783, -12.549, -9.73273, 3.00756, -24.0719, 11.5299, -25.8304, 17.3467, -19.0667, 24.2457, -4.72756, 26.4101, 25.3035, -23.6416, 25.3035 )
+_sections_unfolded = [ "Transform", "Visibility", "Z Index" ]
+
+[node name="AnimatedSprite" type="AnimatedSprite" parent="." index="1"]
+
+scale = Vector2( 0.3, 0.3 )
+frames = SubResource( 1 )
+animation = "default"
+_sections_unfolded = [ "Transform" ]
+
+[node name="ColdTimer" type="Timer" parent="." index="2"]
+
+process_mode = 1
+wait_time = 4.0
+one_shot = true
+autostart = false
+
+[node name="ShockedTimer" type="Timer" parent="." index="3"]
+
+process_mode = 1
+wait_time = 5.0
+one_shot = true
+autostart = false
+
+[node name="IceLightningTimer" type="Timer" parent="." index="4"]
+
+process_mode = 1
+wait_time = 3.0
+one_shot = true
+autostart = false
+
+[node name="BurningTimer" type="Timer" parent="." index="5"]
+
+process_mode = 1
+wait_time = 5.0
+one_shot = true
+autostart = false
+
+[node name="RayCastFront" type="RayCast2D" parent="." index="6"]
+
+position = Vector2( -20.7369, 0.139211 )
+rotation = 1.5708
+scale = Vector2( 1, 7 )
+enabled = true
+exclude_parent = true
+cast_to = Vector2( 0, 50 )
+collision_mask = 1
+_sections_unfolded = [ "Material", "Transform", "Visibility", "Z Index" ]
+
+[node name="RayCastBack" type="RayCast2D" parent="." index="7"]
+
+position = Vector2( 25, 0.762395 )
+rotation = -1.5708
+scale = Vector2( 1, 7 )
+enabled = true
+exclude_parent = true
+cast_to = Vector2( 0, 50 )
+collision_mask = 1
+_sections_unfolded = [ "Transform" ]
+
+[node name="BurningParticleEffects" parent="." index="8" instance=ExtResource( 5 )]
+
+position = Vector2( 9, -28.6 )
+
+[node name="LightningAnimatedSprite" type="AnimatedSprite" parent="." index="9"]
+
+visible = false
+scale = Vector2( 0.3, 0.3 )
+frames = SubResource( 2 )
+animation = "default"
+_sections_unfolded = [ "Transform" ]
+
+[connection signal="timeout" from="ColdTimer" to="." method="_on_ColdTimer_timeout"]
+
+[connection signal="timeout" from="ShockedTimer" to="." method="_on_ShockedTimer_timeout"]
+
+[connection signal="timeout" from="IceLightningTimer" to="." method="_on_IceLightningTimer_timeout"]
+
+[connection signal="timeout" from="BurningTimer" to="." method="_on_BurningTimer_timeout"]
+
+

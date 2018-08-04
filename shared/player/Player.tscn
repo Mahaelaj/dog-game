@@ -1,0 +1,171 @@
+[gd_scene load_steps=15 format=2]
+
+[ext_resource path="res://scripts/player.gd" type="Script" id=1]
+[ext_resource path="res://shared/player/faces/dog-face-idle.png" type="Texture" id=2]
+[ext_resource path="res://shared/player/faces/dog-face-shoot.png" type="Texture" id=3]
+[ext_resource path="res://shared/player/faces/dog-face-fall.png" type="Texture" id=4]
+[ext_resource path="res://shared/player/faces/dog-face-jump.png" type="Texture" id=5]
+[ext_resource path="res://shared/player/robes/robe-idle.png" type="Texture" id=6]
+[ext_resource path="res://shared/player/robes/robe-idle2.png" type="Texture" id=7]
+[ext_resource path="res://shared/player/robes/robe-idle3.png" type="Texture" id=8]
+[ext_resource path="res://shared/player/robes/robe-fall.png" type="Texture" id=9]
+[ext_resource path="res://shared/player/robes/robe-jump.png" type="Texture" id=10]
+
+[sub_resource type="CapsuleShape2D" id=1]
+
+custom_solver_bias = 0.0
+radius = 18.8243
+height = 50.7936
+
+[sub_resource type="SpriteFrames" id=2]
+
+animations = [ {
+"frames": [ ExtResource( 2 ) ],
+"loop": true,
+"name": "idle",
+"speed": 5.0
+}, {
+"frames": [ ExtResource( 3 ) ],
+"loop": true,
+"name": "shoot",
+"speed": 5.0
+}, {
+"frames": [ ExtResource( 2 ) ],
+"loop": true,
+"name": "run",
+"speed": 5.0
+}, {
+"frames": [ ExtResource( 4 ) ],
+"loop": true,
+"name": "fall",
+"speed": 5.0
+}, {
+"frames": [ ExtResource( 5 ) ],
+"loop": true,
+"name": "jump",
+"speed": 5.0
+} ]
+
+[sub_resource type="SpriteFrames" id=3]
+
+animations = [ {
+"frames": [ ExtResource( 6 ), ExtResource( 7 ), ExtResource( 8 ), ExtResource( 7 ) ],
+"loop": true,
+"name": "idle",
+"speed": 3.0
+}, {
+"frames": [ ExtResource( 6 ) ],
+"loop": true,
+"name": "run",
+"speed": 5.0
+}, {
+"frames": [ ExtResource( 9 ) ],
+"loop": true,
+"name": "fall",
+"speed": 5.0
+}, {
+"frames": [ ExtResource( 10 ) ],
+"loop": true,
+"name": "jump",
+"speed": 5.0
+} ]
+
+[sub_resource type="CapsuleShape2D" id=4]
+
+custom_solver_bias = 0.0
+radius = 22.4335
+height = 42.8569
+
+[node name="Player" type="KinematicBody2D"]
+
+input_pickable = false
+collision_layer = 1
+collision_mask = 10
+collision/safe_margin = 0.08
+script = ExtResource( 1 )
+_sections_unfolded = [ "Collision", "Material", "Pickable", "Transform", "Visibility" ]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." index="0"]
+
+position = Vector2( 0, -2 )
+shape = SubResource( 1 )
+_sections_unfolded = [ "Transform" ]
+__meta__ = {
+"_edit_group_": true
+}
+
+[node name="PlayerSprite" type="Node2D" parent="." index="1"]
+
+editor/display_folded = true
+scale = Vector2( 0.3, 0.3 )
+_sections_unfolded = [ "Transform" ]
+
+[node name="Face" type="AnimatedSprite" parent="PlayerSprite" index="0"]
+
+position = Vector2( 0, -93.3334 )
+frames = SubResource( 2 )
+animation = "idle"
+_sections_unfolded = [ "Transform" ]
+
+[node name="ShootAnimTimer" type="Timer" parent="PlayerSprite/Face" index="0"]
+
+process_mode = 1
+wait_time = 0.4
+one_shot = true
+autostart = false
+
+[node name="Robe" type="AnimatedSprite" parent="PlayerSprite" index="1"]
+
+position = Vector2( 0, 70.0001 )
+frames = SubResource( 3 )
+animation = "run"
+_sections_unfolded = [ "Transform", "Z Index" ]
+
+[node name="AnimationQueueTimer" type="Timer" parent="PlayerSprite" index="2"]
+
+process_mode = 1
+wait_time = 0.2
+one_shot = true
+autostart = false
+
+[node name="Area2D" type="Area2D" parent="." index="2"]
+
+visible = false
+position = Vector2( -1, 0 )
+scale = Vector2( 0.96875, 1 )
+input_pickable = true
+gravity_vec = Vector2( 0, 1 )
+gravity = 98.0
+linear_damp = 0.1
+angular_damp = 1.0
+collision_layer = 0
+collision_mask = 8
+audio_bus_override = false
+audio_bus_name = "Master"
+_sections_unfolded = [ "Collision" ]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D" index="0"]
+
+shape = SubResource( 4 )
+
+[node name="TakeDamageTimer" type="Timer" parent="." index="3"]
+
+process_mode = 1
+wait_time = 1.0
+one_shot = true
+autostart = false
+
+[node name="ShootTimer" type="Timer" parent="." index="4"]
+
+process_mode = 1
+wait_time = 3.0
+one_shot = true
+autostart = false
+
+[connection signal="timeout" from="PlayerSprite/AnimationQueueTimer" to="." method="_on_AnimationQueueTimer_timeout"]
+
+[connection signal="body_entered" from="Area2D" to="." method="_on_Area2D_body_entered"]
+
+[connection signal="timeout" from="TakeDamageTimer" to="." method="_on_TakeDamageTimer_timeout"]
+
+

@@ -1,0 +1,159 @@
+[gd_scene load_steps=21 format=2]
+
+[ext_resource path="res://shared/enemies/tentacle/tentacleMonster.gd" type="Script" id=1]
+[ext_resource path="res://shared/enemies/tentacle/tentacle-window.png" type="Texture" id=2]
+[ext_resource path="res://shared/enemies/tentacle/tentacle-monster1.png" type="Texture" id=3]
+[ext_resource path="res://shared/enemies/tentacle/tentacle-monster2.png" type="Texture" id=4]
+[ext_resource path="res://shared/enemies/tentacle/tentacle-monster3.png" type="Texture" id=5]
+[ext_resource path="res://shared/enemies/tentacle/tentacle-monster4.png" type="Texture" id=6]
+[ext_resource path="res://shared/enemies/tentacle/tentacle-monster5.png" type="Texture" id=7]
+[ext_resource path="res://shared/enemies/tentacle/tentacle-monster6.png" type="Texture" id=8]
+[ext_resource path="res://shared/enemies/tentacle/tentacle-monster7.png" type="Texture" id=9]
+[ext_resource path="res://shared/enemies/tentacle/tentacle-monster8.png" type="Texture" id=10]
+[ext_resource path="res://shared/enemies/tentacle/tentacle-monster9.png" type="Texture" id=11]
+[ext_resource path="res://shared/attacks/burningParticleEffect/BurningParticleEffects.tscn" type="PackedScene" id=12]
+[ext_resource path="res://shared/enemies/tentacle/tentacleLightning1.png" type="Texture" id=13]
+[ext_resource path="res://shared/enemies/tentacle/tentacleLightning2.png" type="Texture" id=14]
+[ext_resource path="res://shared/enemies/tentacle/tentacleLightning3.png" type="Texture" id=15]
+[ext_resource path="res://shared/enemies/tentacle/tentacleLightning4.png" type="Texture" id=16]
+[ext_resource path="res://shared/enemies/tentacle/tentacleLightning5.png" type="Texture" id=17]
+
+[sub_resource type="SpriteFrames" id=1]
+
+animations = [ {
+"frames": [ ExtResource( 3 ), ExtResource( 4 ), ExtResource( 5 ), ExtResource( 6 ), ExtResource( 7 ), ExtResource( 8 ), ExtResource( 9 ), ExtResource( 10 ), ExtResource( 11 ) ],
+"loop": true,
+"name": "default",
+"speed": 5.0
+} ]
+_sections_unfolded = [ "Resource" ]
+
+[sub_resource type="RectangleShape2D" id=2]
+
+custom_solver_bias = 0.0
+extents = Vector2( 17.5716, 64.207 )
+
+[sub_resource type="SpriteFrames" id=3]
+
+animations = [ {
+"frames": [ ExtResource( 13 ), ExtResource( 14 ), ExtResource( 15 ), ExtResource( 16 ), ExtResource( 17 ) ],
+"loop": true,
+"name": "default",
+"speed": 5.0
+} ]
+
+[node name="tentacleMonster" type="KinematicBody2D"]
+
+input_pickable = false
+collision_layer = 8
+collision_mask = 2
+collision/safe_margin = 0.08
+script = ExtResource( 1 )
+_sections_unfolded = [ "Collision", "collision" ]
+
+[node name="TentacleWindow" type="Sprite" parent="." index="0"]
+
+position = Vector2( 1, 56.9 )
+texture = ExtResource( 2 )
+_sections_unfolded = [ "Transform", "Visibility" ]
+
+[node name="AnimatedSprite" type="AnimatedSprite" parent="." index="1"]
+
+frames = SubResource( 1 )
+animation = "default"
+playing = true
+_sections_unfolded = [ "Transform", "Z Index" ]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." index="2"]
+
+position = Vector2( -0.13163, -22.6431 )
+shape = SubResource( 2 )
+_sections_unfolded = [ "Transform", "Z Index" ]
+
+[node name="RayCastFront" type="RayCast2D" parent="." index="3"]
+
+position = Vector2( 0, -30 )
+rotation = 1.5708
+scale = Vector2( 1.85, 20 )
+enabled = true
+exclude_parent = true
+cast_to = Vector2( 0, 50 )
+collision_mask = 1
+_sections_unfolded = [ "Transform" ]
+
+[node name="RayCastBack" type="RayCast2D" parent="." index="4"]
+
+position = Vector2( 0, -30 )
+rotation = -1.5708
+scale = Vector2( 1.85, 20 )
+enabled = true
+exclude_parent = true
+cast_to = Vector2( 0, 50 )
+collision_mask = 1
+_sections_unfolded = [ "Transform", "Visibility" ]
+
+[node name="ShootTimer" type="Timer" parent="." index="5"]
+
+process_mode = 1
+wait_time = 4.0
+one_shot = true
+autostart = false
+
+[node name="BurningParticleEffects1" parent="." index="6" instance=ExtResource( 12 )]
+
+position = Vector2( -2.00001, 40 )
+
+[node name="BurningParticleEffects2" parent="." index="7" instance=ExtResource( 12 )]
+
+position = Vector2( -14, 39 )
+
+[node name="BurningParticleEffects3" parent="." index="8" instance=ExtResource( 12 )]
+
+position = Vector2( 10, 39 )
+
+[node name="BurningTimer" type="Timer" parent="." index="9"]
+
+process_mode = 1
+wait_time = 5.0
+one_shot = true
+autostart = false
+
+[node name="ColdTimer" type="Timer" parent="." index="10"]
+
+process_mode = 1
+wait_time = 4.0
+one_shot = true
+autostart = false
+
+[node name="LightningAnimatedSprite" type="AnimatedSprite" parent="." index="11"]
+
+visible = false
+position = Vector2( 0, -23 )
+frames = SubResource( 3 )
+animation = "default"
+frame = 4
+_sections_unfolded = [ "Visibility" ]
+
+[node name="ShockedTimer" type="Timer" parent="." index="12"]
+
+process_mode = 1
+wait_time = 5.0
+one_shot = true
+autostart = false
+
+[node name="IceLightningTimer" type="Timer" parent="." index="13"]
+
+process_mode = 1
+wait_time = 3.0
+one_shot = true
+autostart = false
+
+[connection signal="timeout" from="BurningTimer" to="." method="_on_BurningTimer_timeout"]
+
+[connection signal="timeout" from="ColdTimer" to="." method="_on_ColdTimer_timeout"]
+
+[connection signal="timeout" from="ShockedTimer" to="." method="_on_ShockedTimer_timeout"]
+
+[connection signal="timeout" from="IceLightningTimer" to="." method="_on_IceLightningTimer_timeout"]
+
+
