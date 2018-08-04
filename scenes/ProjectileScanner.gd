@@ -19,5 +19,4 @@ func _on_ProjectileScanner_body_exited(body):
 	if (!body.is_in_group('projectile')): return;
 	body.startDestroyTimer();
 	# body.queue_free()
-	print('projectile exited');
 	pass # replace with function body

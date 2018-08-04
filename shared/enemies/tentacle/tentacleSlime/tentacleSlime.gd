@@ -11,11 +11,11 @@ func _physics_process(delta):
 	if (collisionBody): handleProjectileCollision();
 	
 func handleProjectileCollision():
-	print('doing stuff');
 	$CollisionShape2D.disabled = true;
 	$TentacleSlime.visible = false;
 	$TailParticles.emitting = false;
 	$CollisionParticles.emitting = true;
 	
 func getDamageDealt():
+	print('getting damage dealt');
 	return 10;

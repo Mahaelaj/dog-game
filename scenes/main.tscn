@@ -25,7 +25,7 @@ extents = Vector2( 399.842, 236.96 )
 flags = 4
 load_path = ""
 
-[node name="Node" type="Node"]
+[node name="Node" type="Node" index="0"]
 
 [node name="Player" parent="." index="0" instance=ExtResource( 1 )]
 

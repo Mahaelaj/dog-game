@@ -61,6 +61,7 @@ _sections_unfolded = [ "Transform", "Visibility" ]
 
 frames = SubResource( 1 )
 animation = "default"
+frame = 7
 playing = true
 _sections_unfolded = [ "Transform", "Z Index" ]
 

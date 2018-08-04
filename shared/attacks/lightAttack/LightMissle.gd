@@ -14,7 +14,6 @@ func _physics_process(delta):
 	$CollisionShape2D.disabled = true;
 	$Tween.interpolate_property(get_node("Sprite"), "modulate", Color(1, 1, 1, 1), Color(1, 1, 1, 0), .75, Tween.TRANS_LINEAR, Tween.EASE_IN_OUT)
 	$Tween.start();
-	$Tween.interpolate_callback(self, 1.25, "destroyProjectile");
 	$TailParticles.emitting = false;
 	$CollisionParticles.emitting = true;
 	

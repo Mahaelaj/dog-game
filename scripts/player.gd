@@ -58,12 +58,11 @@ func _physics_process(delta):
 func shoot():
 	FACESPRITE.play("shoot");
 	SHOOTANIMTIMER.start();
-	
-func _on_Robe_frame_changed():
-	pass
 
 func _on_Area2D_body_entered(body):
+	print(!body.is_in_group('enemy') && !body.is_in_group('enemy-projectile'));
 	if (!body.is_in_group('enemy') && !body.is_in_group('enemy-projectile')): return;
+	print(body.getDamageDealt());
 	takeDamage(body.getDamageDealt());
 	$TakeDamageTimer.start();
 	if (body.is_in_group('enemy-projectile')): body.handleProjectileCollision();

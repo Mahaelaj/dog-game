@@ -129,7 +129,7 @@ anim_offset = 0.0
 anim_offset_random = 0.0
 anim_loop = false
 
-[node name="LightMissle" type="KinematicBody2D" index="0"]
+[node name="LightMissle" type="KinematicBody2D"]
 
 position = Vector2( -1, -1 )
 scale = Vector2( 0.1, 0.1 )
